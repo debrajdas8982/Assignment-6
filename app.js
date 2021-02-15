@@ -15,6 +15,7 @@ const KEY = '15674931-a9d714b6e9d654524df198e00&q';
 
 // show images 
 const showImages = (images) => {
+  toggleSpinner();
   imagesArea.style.display = 'block';
   gallery.innerHTML = '';
   // show gallery title
@@ -24,6 +25,7 @@ const showImages = (images) => {
     div.className = 'col-lg-3 col-md-4 col-xs-6 img-item mb-2';
     div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
     gallery.appendChild(div)
+    
   })
 
   document.getElementById("search").value = '';
@@ -67,7 +69,6 @@ const selectItem = (event, img) => {
 }
 var timer;
 const createSlider = () => {
-  toggleSpinner();
   // check slider image length
   if (sliders.length < 2) {
     alert('Select at least 2 image.')
@@ -86,7 +87,7 @@ const createSlider = () => {
   document.querySelector('.main').style.display = 'block';
   // hide image aria
   imagesArea.style.display = 'none';
-  const duration = document.getElementById('duration').value || 1000;
+  const duration = Math.abs(document.getElementById('duration').value || 1000) ;
   sliders.forEach(slide => {
     let item = document.createElement('div')
     item.className = "slider-item";
@@ -97,9 +98,9 @@ const createSlider = () => {
   })
   changeSlide(0)
   timer = setInterval(function () {
-    if (duration < 0) {
-      clearInterval(timer);
-    }
+    // if (duration < 0) {
+    //   clearInterval(timer);
+    // }
     slideIndex++;
     changeSlide(slideIndex);
   }, duration);
